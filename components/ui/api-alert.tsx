@@ -1,13 +1,11 @@
 "use client";
 
-import React from "react"; // Добавьте этот импорт
 import toast from "react-hot-toast";
 import { Copy, Server } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
 import { Badge, BadgeProps } from "@/components/ui/badge";
-
+import { Button } from "@/components/ui/button";
 
 interface ApiAlertProps {
     title: string;
@@ -16,8 +14,8 @@ interface ApiAlertProps {
 };
 
 const textMap: Record<ApiAlertProps["variant"], string> = {
-    public: "Public",
-    admin: "Admin"
+    public:"Public",
+    admin:"Admin"
 };
 
 const variantMap: Record<ApiAlertProps["variant"], BadgeProps["variant"]> = {

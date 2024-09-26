@@ -1,38 +1,48 @@
-import React from 'react'; // Добавить импорт React
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
+import {
+  ClerkProvider,
+  RedirectToSignIn,
+  SignedIn,
+  SignedOut,
+} from "@clerk/nextjs"
 
-import prismadb from '@/lib/prismadb'; // Убедись, что файл существует
-import Navbar from '@/components/navbar'; // Убедись, что файл существует и регистр совпадает
+import {ToasterProvider} from "@/providers/toast-provider"
+import {ModalProvider} from "@/providers/modal-provider"
 
-export default async function DashboardLayout({
+import { Metadata } from "next"
+
+import "./globals.css"
+import { ThemeProvider } from "@/providers/theme-provider"
+
+export const metadata: Metadata = {
+  title: "Admin Dashboard",
+  description: "Admin Dashboard",
+}
+
+export default function RootLayout({
   children,
-  params
 }: {
-  children: React.ReactNode;
-  params: { storeId: string }
+  children: React.ReactNode
 }) {
-  const { userId } = auth();
-
-  if (!userId) {
-    redirect('/sign-in');
-  }
-
-  const store = await prismadb.store.findFirst({
-    where: {
-      id: params.storeId,
-      userId
-    }
-  });
-
-  if (!store) {
-    redirect('/');
-  }
-
   return (
-    <>
-      <Navbar/>
-      {children}
-    </>
-  );
+      <ClerkProvider>
+          <html lang="en">
+              <body>
+                  <ThemeProvider
+                      attribute="class"
+                      defaultTheme="dark"
+                      enableSystem
+                      disableTransitionOnChange
+                  >
+                      <SignedOut>
+                          <RedirectToSignIn />
+                      </SignedOut>
+                      <SignedIn />
+                      <ToasterProvider />
+                      <ModalProvider />
+                      {children}
+                  </ThemeProvider>
+              </body>
+          </html>
+      </ClerkProvider>
+  )
 }

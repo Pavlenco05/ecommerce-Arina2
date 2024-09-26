@@ -1,16 +1,22 @@
 "use client";
 
-import React from "react";
 import axios from "axios";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { BillboardColumn } from "./columns";
-import { AlertModal } from "@/components/modals/alert-modal";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { 
+DropdownMenu, 
+DropdownMenuContent, 
+DropdownMenuItem, 
+DropdownMenuLabel, 
+DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { AlertModal } from "@/components/modals/alert-modal";
+
+import { BillboardColumn } from "./columns";
 
 interface CellActionProps {
     data: BillboardColumn;
